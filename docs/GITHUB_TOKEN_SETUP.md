@@ -464,27 +464,54 @@ When using this Remote SSH extension with GitHub repositories:
 
 ```bash
 # Connect to remote server via SSH
-# Then clone using token
-git clone https://YOUR_TOKEN@github.com/username/repo.git
+# Method 1: Using environment variable (recommended)
+export GITHUB_TOKEN="your_token_here"
+git clone https://${GITHUB_TOKEN}@github.com/username/repo.git
+
+# Method 2: Credential helper will prompt for token
+git clone https://github.com/username/repo.git
+# When prompted for password, enter your token
 ```
+
+**Security Note:** Avoid including tokens directly in URLs as they appear in shell history and process lists.
 
 ### 2. Configure Git on Remote Server
 
 ```bash
 # SSH into remote server
-# Configure git credentials
+# Method 1: Use credential helper with cache (recommended for temporary access)
+git config --global credential.helper 'cache --timeout=3600'
+
+# Method 2: Use credential helper with store (convenience, but less secure)
+# ⚠️ WARNING: This stores credentials in plain text at ~/.git-credentials
+# Only use on secure, personal remote servers
 git config --global credential.helper store
 echo "https://YOUR_TOKEN:x-oauth-basic@github.com" > ~/.git-credentials
+chmod 600 ~/.git-credentials  # Restrict file permissions
+
+# Method 3: Use environment variable (most secure)
+echo 'export GITHUB_TOKEN="your_token_here"' >> ~/.bashrc
+source ~/.bashrc
+# Configure git to use token from environment
+git config --global credential.helper '!f() { echo "username=token"; echo "password=$GITHUB_TOKEN"; }; f'
 ```
+
+**Security Recommendations:**
+- Use credential cache for temporary sessions
+- If using credential store, ensure proper file permissions (600)
+- Consider using environment variables or secure vaults
+- Never commit credentials to repositories
 
 ### 3. Use GitHub CLI on Remote Server
 
 ```bash
-# Install GitHub CLI on remote server
+# Install GitHub CLI on remote server (Debian/Ubuntu)
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 sudo apt update
 sudo apt install gh
+
+# For other distributions, see: https://github.com/cli/cli#installation
 
 # Authenticate
 echo "YOUR_TOKEN" | gh auth login --with-token

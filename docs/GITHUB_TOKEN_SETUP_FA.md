@@ -404,27 +404,54 @@ security find-generic-password -a "$USER" -s "github_token" -w
 
 ```bash
 # اتصال به سرور راه دور از طریق SSH
-# سپس کلون با استفاده از توکن
-git clone https://YOUR_TOKEN@github.com/username/repo.git
+# روش ۱: استفاده از متغیر محیطی (توصیه می‌شود)
+export GITHUB_TOKEN="your_token_here"
+git clone https://${GITHUB_TOKEN}@github.com/username/repo.git
+
+# روش ۲: credential helper درخواست توکن می‌کند
+git clone https://github.com/username/repo.git
+# هنگام درخواست رمز عبور، توکن خود را وارد کنید
 ```
+
+**نکته امنیتی:** از قرار دادن مستقیم توکن در URL خودداری کنید زیرا در تاریخچه shell و لیست پروسه‌ها ظاهر می‌شود.
 
 ### ۲. پیکربندی Git روی سرور راه دور
 
 ```bash
 # SSH به سرور راه دور
-# پیکربندی اعتبارنامه‌های git
+# روش ۱: استفاده از credential helper با cache (توصیه می‌شود برای دسترسی موقت)
+git config --global credential.helper 'cache --timeout=3600'
+
+# روش ۲: استفاده از credential helper با store (راحت، اما کم‌امن‌تر)
+# ⚠️ هشدار: این اعتبارنامه‌ها را به صورت متن ساده در ~/.git-credentials ذخیره می‌کند
+# فقط در سرورهای راه دور شخصی و امن استفاده کنید
 git config --global credential.helper store
 echo "https://YOUR_TOKEN:x-oauth-basic@github.com" > ~/.git-credentials
+chmod 600 ~/.git-credentials  # محدود کردن مجوزهای فایل
+
+# روش ۳: استفاده از متغیر محیطی (امن‌ترین)
+echo 'export GITHUB_TOKEN="your_token_here"' >> ~/.bashrc
+source ~/.bashrc
+# پیکربندی git برای استفاده از توکن از محیط
+git config --global credential.helper '!f() { echo "username=token"; echo "password=$GITHUB_TOKEN"; }; f'
 ```
+
+**توصیه‌های امنیتی:**
+- برای جلسات موقت از credential cache استفاده کنید
+- در صورت استفاده از credential store، مجوزهای صحیح فایل (600) را تضمین کنید
+- استفاده از متغیرهای محیطی یا گاوصندوق‌های امن را در نظر بگیرید
+- هرگز اعتبارنامه‌ها را در مخازن commit نکنید
 
 ### ۳. استفاده از GitHub CLI روی سرور راه دور
 
 ```bash
-# نصب GitHub CLI روی سرور راه دور
+# نصب GitHub CLI روی سرور راه دور (Debian/Ubuntu)
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 sudo apt update
 sudo apt install gh
+
+# برای توزیع‌های دیگر، مراجعه کنید به: https://github.com/cli/cli#installation
 
 # احراز هویت
 echo "YOUR_TOKEN" | gh auth login --with-token
