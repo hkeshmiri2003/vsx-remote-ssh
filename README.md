@@ -199,6 +199,18 @@ Connect to and develop on remote servers via SSH with full VS Code integration.
 - **Context Persistence**: Maintain workspace state
 - **Context Awareness**: Context-aware development
 
+## GitHub Integration
+
+This extension works seamlessly with GitHub repositories on remote servers. For comprehensive GitHub access including Copilot Pro, Codespaces, Agents, and MCP Server:
+
+- **Full Setup Guide**: [GitHub Token Setup](docs/GITHUB_TOKEN_SETUP.md)
+- **Copilot Integration**: Access AI-powered coding assistance
+- **Codespaces Support**: Manage development environments
+- **Repository Access**: Full control over repositories and workflows
+- **Security Best Practices**: Token management and rotation
+
+See [GITHUB_TOKEN_SETUP.md](docs/GITHUB_TOKEN_SETUP.md) for detailed instructions on creating and configuring GitHub Personal Access Tokens with all necessary permissions.
+
 ## Requirements
 
 - **VS Code**: 1.74.0 or higher
@@ -352,6 +364,7 @@ Remote SSH: Optimize Mount Performance
 
 - **Documentation**: [GitHub Wiki](https://github.com/jajera/vsx-remote-ssh/wiki)
 - **Usage Guide**: [USAGE.md](docs/USAGE.md)
+- **GitHub Token Setup**: [GITHUB_TOKEN_SETUP.md](docs/GITHUB_TOKEN_SETUP.md) | [راهنمای فارسی](docs/GITHUB_TOKEN_SETUP_FA.md)
 - **Mount Troubleshooting**: [MOUNT_TROUBLESHOOTING.md](docs/MOUNT_TROUBLESHOOTING.md)
 - **Issues**: [GitHub Issues](https://github.com/jajera/vsx-remote-ssh/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/jajera/vsx-remote-ssh/discussions)
