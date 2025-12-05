@@ -311,16 +311,44 @@ gh codespace code --codespace name --web
 
 ### Model Context Protocol (MCP) Server Access
 
-With full permissions, you can interact with GitHub's MCP servers:
+**What is MCP?**
+
+Model Context Protocol (MCP) is an open standard that enables AI applications and tools to securely connect with various data sources and services. MCP servers act as bridges between AI agents (like GitHub Copilot) and external systems, allowing AI to access and manipulate data through standardized interfaces.
+
+**GitHub MCP Integration:**
+
+With full GitHub token permissions, MCP servers can:
+- Connect AI agents to GitHub repositories and resources
+- Enable Copilot and other AI tools to read code, issues, and pull requests
+- Allow AI agents to perform GitHub operations on your behalf
+- Facilitate secure communication between AI systems and GitHub
+
+**Example MCP Use Cases:**
 
 ```bash
-# Example: Query GitHub data through MCP
+# MCP servers use GitHub tokens to access resources for AI agents
+# The token provides authentication for MCP server operations
+
+# Example 1: MCP server accessing repository data for AI analysis
+# (This is typically done by MCP server implementations, not direct API calls)
 curl -H "Authorization: Bearer YOUR_TOKEN" \
+     -H "Accept: application/vnd.github.v3+json" \
      https://api.github.com/repos/owner/repo/contents/
 
-# Use with AI agents and tooling
-# Token enables agents to access GitHub resources
+# Example 2: GitHub Copilot Extensions using MCP
+# Copilot extensions can use MCP servers to access GitHub data
+# Your token enables these extensions to work with your repositories
+
+# Example 3: Custom MCP servers
+# You can build MCP servers that use your GitHub token to provide
+# AI agents with access to your GitHub resources
 ```
+
+**Important Notes:**
+- MCP servers are typically used by AI tools and extensions, not directly by users
+- Your GitHub token enables MCP servers to authenticate with GitHub on behalf of AI agents
+- When using Copilot Extensions that leverage MCP, they use your token permissions
+- MCP provides a secure, standardized way for AI to interact with GitHub
 
 ### GitHub Agents
 
