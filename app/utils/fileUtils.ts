@@ -1,5 +1,5 @@
-import { readTextFile, writeTextFile, exists, createDir } from '@tauri-apps/api/fs';
-import { open, save } from '@tauri-apps/api/dialog';
+import { readTextFile, writeTextFile, exists, mkdir as createDir } from '@tauri-apps/plugin-fs';
+import { open, save } from '@tauri-apps/plugin-dialog';
 import { homeDir } from '@tauri-apps/api/path';
 
 export const getDefaultVSCodeSettingsPath = async (): Promise<string> => {
@@ -16,7 +16,7 @@ export const getDefaultVSCodeSettingsPath = async (): Promise<string> => {
 };
 
 export const getPlatform = async (): Promise<string> => {
-  const { platform } = await import('@tauri-apps/api/os');
+  const { platform } = await import('@tauri-apps/plugin-os');
   return platform();
 };
 
