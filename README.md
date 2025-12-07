@@ -1,8 +1,51 @@
-# VSX Remote SSH Extension
+# VSX Remote SSH
 
 [![CI](https://github.com/jajera/vsx-remote-ssh/actions/workflows/ci.yml/badge.svg)](https://github.com/jajera/vsx-remote-ssh/actions/workflows/ci.yml)
 
 [![Release to Open VSX Registry](https://github.com/jajera/vsx-remote-ssh/actions/workflows/publish-open-vsx.yml/badge.svg)](https://github.com/jajera/vsx-remote-ssh/actions/workflows/publish-open-vsx.yml)
+
+## Two Ways to Manage Your VS Code Development
+
+This repository contains **two powerful tools** for VS Code and remote development:
+
+1. **VS Code Extension** - Connect to and develop on remote servers via SSH with full VS Code integration
+2. **Desktop Config Manager** - A standalone Tauri desktop application for managing VS Code configurations, API keys, MCP servers, and more
+
+---
+
+## 🎯 VSCode Super Config Manager (Desktop App)
+
+A modern desktop application for managing all your VS Code configurations from one place.
+
+### Quick Start (Desktop App)
+
+```bash
+# Install dependencies
+npm install
+
+# Run in development
+npm run tauri dev
+
+# Build for production (Windows EXE, Linux, macOS)
+npm run tauri build
+```
+
+**📖 Full Documentation**: See [TAURI_README.md](TAURI_README.md) for complete desktop app documentation.
+
+### Desktop App Features
+
+- 📊 **Dashboard** - Quick overview and actions
+- ⚙️ **VS Code Settings** - Manage global `settings.json`
+- 📁 **Workspace Settings** - Configure workspace-specific settings
+- 🔑 **AI & API Keys** - Securely manage `.env.local` and API keys
+- 🔌 **Extensions & Scripts** - Generate installation scripts (PowerShell/Bash)
+- 🖥️ **MCP Servers** - Configure Model Context Protocol servers
+- 🔐 **SSH / Remote Helpers** - Generate SSH config snippets
+- 💾 **Backup & Restore** - Create and restore configuration backups (ZIP)
+
+---
+
+## 🔌 VS Code Extension (Remote SSH)
 
 Connect to and develop on remote servers via SSH with full VS Code integration.
 
@@ -402,8 +445,38 @@ This extension is licensed under the MIT License. See [LICENSE](LICENSE) for det
 
 See [CHANGELOG.md](CHANGELOG.md) for a complete list of changes.
 
+## Which Tool Should I Use?
+
+### Use the **Desktop Config Manager** if you want to:
+- Manage VS Code settings across multiple machines
+- Centrally manage API keys and environment variables
+- Generate extension installation scripts
+- Configure MCP servers
+- Create and restore configuration backups
+- Have a GUI for managing SSH configs
+- Work offline with local configuration files
+
+### Use the **VS Code Extension** if you want to:
+- Connect to remote servers via SSH from within VS Code
+- Edit files directly on remote servers
+- Run remote terminal sessions
+- Mount remote folders
+- Develop on remote machines seamlessly
+
+### Use **Both** for the complete experience!
+- Use the Desktop App to manage configurations and create backups
+- Use the Extension to connect to remote servers and develop
+- Restore configurations on new machines using the Desktop App
+- Generate SSH configs with the Desktop App, use them with the Extension
+
 ## Acknowledgments
 
+### VS Code Extension
 - Built with [VS Code Extension API](https://code.visualstudio.com/api)
 - SSH functionality powered by [ssh2](https://github.com/mscdex/ssh2)
 - File system operations with [ssh2-sftp-client](https://github.com/theophilusx/ssh2-sftp-client)
+
+### Desktop Config Manager
+- Built with [Tauri](https://tauri.app/)
+- UI powered by [React](https://react.dev/)
+- File archiving with [JSZip](https://stuk.github.io/jszip/)
